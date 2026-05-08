@@ -8,6 +8,6 @@ sky:
     password: 1260376520Jgc
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    access-key-id:   # 改为读取环境变量
-    access-key-secret:  # 改为读取环境变量
+    access-key-id:  # 改为读取环境变量
+    access-key-secret:     # 改为读取环境变量
     bucket-name: jianggc-java-ai-01
