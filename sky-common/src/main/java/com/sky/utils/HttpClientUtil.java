@@ -1,6 +1,7 @@
 package com.sky.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sky.properties.WeChatProperties;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -13,6 +14,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.net.URI;
@@ -23,9 +25,11 @@ import java.util.Map;
 /**
  * Http工具类
  */
+
 public class HttpClientUtil {
 
     static final  int TIMEOUT_MSEC = 5 * 1000;
+
 
     /**
      * 发送GET方式请求
