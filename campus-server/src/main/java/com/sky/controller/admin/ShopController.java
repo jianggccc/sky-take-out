@@ -19,13 +19,25 @@ public class ShopController {
     @PutMapping("/{status}")
     public Result setStatus(@PathVariable Integer status){
         log.info("设置平台状态：{}",status == 1 ? "运营中" : "维护中");
-        redisTemplate.opsForValue().set(KEY, status);
+        try {
+            redisTemplate.opsForValue().set(KEY, status);
+        } catch (Exception e) {
+            log.warn("Redis 连接失败，状态未能持久化");
+        }
         return Result.success();
     }
 
     @GetMapping("/status")
     public Result<Integer> getStatus(){
-        Integer status = (Integer) redisTemplate.opsForValue().get(KEY);
+        Integer status = null;
+        try {
+            status = (Integer) redisTemplate.opsForValue().get(KEY);
+        } catch (Exception e) {
+            log.warn("Redis 连接失败，默认返回运营中");
+        }
+        if (status == null) {
+            status = 1;
+        }
         log.info("获取平台状态：{}",status == 1 ? "运营中" : "维护中");
         return Result.success(status);
     }

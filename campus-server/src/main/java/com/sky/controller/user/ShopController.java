@@ -18,8 +18,16 @@ public class ShopController {
 
     @GetMapping("/status")
     public Result<Integer> getStatus(){
-        Integer status = (Integer) redisTemplate.opsForValue().get(KEY);
-        log.info("获取平台状态：{}",status == 1 ? "运营中" : "维护中");
+        Integer status = null;
+        try {
+            status = (Integer) redisTemplate.opsForValue().get(KEY);
+        } catch (Exception e) {
+            log.warn("Redis 连接失败，默认返回运营中");
+        }
+        if (status == null) {
+            status = 1; // 默认运营中
+        }
+        log.info("获取平台状态：{}", status == 1 ? "运营中" : "维护中");
         return Result.success(status);
     }
 }
